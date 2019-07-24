@@ -26,6 +26,7 @@ dependencies:
 - servant-server
 - wai
 - warp
+- persistent-postgresql
 
 ghc-options:
 - -Wall

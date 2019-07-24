@@ -4,16 +4,20 @@ module Types where
 import RIO
 import RIO.Process
 
+import qualified RIO.ByteString as BS
+import Database.Persist.Postgresql (ConnectionPool, ConnectionString, createPostgresqlPool)
+
 -- | Command line arguments
 data Options = Options
   { optionsVerbose :: !Bool
   }
 
 data App = App
-  { appLogFunc :: !LogFunc
+  { appLogFunc        :: !LogFunc
   , appProcessContext :: !ProcessContext
-  , appOptions :: !Options
-  , appPort :: !Int
+  , appOptions        :: !Options
+  , appPort           :: !Int
+  , appPool           :: ConnectionPool
   }
 
 instance HasLogFunc App where
@@ -27,3 +31,10 @@ instance HasPort Int where
   portL = id
 instance HasPort App where
   portL = appPort
+
+
+makePool :: IO ConnectionPool
+makePool = createPostgresqlPool (connStr "") 1
+
+connStr :: BS.ByteString -> ConnectionString
+connStr sfx = "host=localhost dbname=perservant" <> sfx <> " user=test password=test port=5432"

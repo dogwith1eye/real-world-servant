@@ -26,8 +26,9 @@ $(deriveJSON defaultOptions ''User)
 
 type API = "users" :> Get '[JSON] [User]
 
-startApp :: HasPort env => RIO env ()
+startApp :: (HasLogFunc env, HasPort env) => RIO env ()
 startApp = do
+  logInfo "servant-persistent booting up"
   env <- ask
   liftIO $ run (portL env) app
 
