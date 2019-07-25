@@ -16,7 +16,7 @@ data App = App
   , appProcessContext :: !ProcessContext
   , appOptions        :: !Options
   , appPort           :: !Int
-  , appPool           :: ConnectionPool
+  , appPool           :: !ConnectionPool
   }
 
 instance HasLogFunc App where

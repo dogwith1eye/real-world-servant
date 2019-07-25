@@ -27,6 +27,7 @@ dependencies:
 - wai
 - warp
 - persistent-postgresql
+- monad-logger
 
 ghc-options:
 - -Wall

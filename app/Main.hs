@@ -8,7 +8,9 @@ import Run
 import RIO.Process
 import Options.Applicative.Simple
 import qualified Paths_real_world_servant
-import Database.Persist.Postgresql (ConnectionPool, ConnectionString, createPostgresqlPool)
+
+import Control.Monad.Logger (runNoLoggingT)
+import Database.Persist.Postgresql (createPostgresqlPool)
 
 main :: IO ()
 main = do
@@ -25,7 +27,7 @@ main = do
     empty
   lo <- logOptionsHandle stderr (optionsVerbose options)
   pc <- mkDefaultProcessContext
-  pool <- createPostgresqlPool "host=localhost dbname=perservant user=test password=test port=5432" 1
+  pool <- runNoLoggingT $ createPostgresqlPool "host=localhost dbname=perservant user=test password=test port=5432" 1
   withLogFunc lo $ \lf ->
     let app = App
           { appLogFunc = lf

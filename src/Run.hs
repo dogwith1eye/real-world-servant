@@ -12,10 +12,6 @@ import Network.Wai
 import Network.Wai.Handler.Warp
 import Servant
 
--- run :: RIO App ()
--- run = do
---   logInfo "We're inside the application!"
-
 data User = User
   { userId        :: Int
   , userFirstName :: String
